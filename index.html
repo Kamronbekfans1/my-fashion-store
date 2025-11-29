@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onlayn Kiyim Do'koni</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
+            color: var(--dark);
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--secondary);
+        }
+        
+        .contact-section {
+            background-color: var(--light);
+            padding: 3rem 0;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cart-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .cart-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .cart-item-details h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item-price {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sarlavha qismi -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">ModaDo'kon</div>
+                <nav>
+                    <ul>
+                        <li><a href="#bosh-sahifa">Bosh Sahifa</a></li>
+                        <li><a href="#kiyimlar">Kiyimlar</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                    </ul>
+                </nav>
+                <div class="cart-icon" id="cartIcon">
+                    <span>🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero qismi -->
+    <section class="hero" id="bosh-sahifa">
+        <div class="hero-content">
+            <h1>Zamonaviy Kiyimlar Do'koni</h1>
+            <p>Eng so'nggi moda trendlari va sifatli kiyimlar</p>
+            <a href="#kiyimlar" class="btn">Hozir xarid qiling</a>
+        </div>
+    </section>
+
+    <!-- Kiyimlar katalogi -->
+    <section class="container" id="kiyimlar">
+        <h2 class="section-title">Kiyimlar Katalogi</h2>
+        
+        <!-- Filtrlash -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Hammasi</button>
+            <button class="filter-btn" data-filter="erkak">Erkaklar</button>
+            <button class="filter-btn" data-filter="ayol">Ayollar</button>
+            <button class="filter-btn" data-filter="bola">Bolalar</button>
+        </div>
+        
+        <!-- Mahsulotlar -->
+        <div class="products" id="productsContainer">
+            <!-- Mahsulotlar JavaScript orqali yuklanadi -->
+        </div>
+    </section>
+
+    <!-- Kontakt qismi -->
+    <section class="contact-section" id="kontakt">
+        <div class="container">
+            <h2 class="section-title">Biz bilan bog'laning</h2>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Ismingiz</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefon raqam</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Xabar</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Xabarni yuborish</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">ModaDo'kon</div>
+                <p>Eng yaxshi kiyimlar faqat bizda</p>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">📷</a>
+                    <a href="#">🐦</a>
+                </div>
+                <p>&copy; 2023 ModaDo'kon. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Savat modali -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Sizning savatingiz</h2>
+                <button class="close-cart" id="closeCart">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Savatdagi mahsulotlar -->
+            </div>
+            <div class="cart-total">
+                Jami: <span id="cartTotal">0</span> so'm
+            </div>
+            <button class="btn" id="checkoutBtn">Buyurtma berish</button>
+        </div>
+    </div>
+
+    <script>
+        // Mahsulotlar ma'lumotlari
+        const products = [
+            {
+                id: 1,
+                name: "Erkaklar Ko'ylagi",
+                price: 150000,
+                category: "erkak",
+                image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 2,
+                name: "Ayollar Platfoyi",
+                price: 250000,
+                category: "ayol",
+                image: "data:image/jpeg;base64,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"
+            },
+            {
+                id: 3,
+                name: "Bola Kostyumi",
+                price: 120000,
+                category: "bola",
+                image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 4,
+                name: "Erkaklar Shimlari",
+                price: 180000,
+                category: "erkak",
+                image: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 5,
+                name: "Ayollar Ko'ftasi",
+                price: 220000,
+                category: "ayol",
+                image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 6,
+                name: "Bola Ko'ylagi",
+                price: 80000,
+                category: "bola",
+                image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            }
+        ];
+
+        // Savat ma'lumotlari
+        let cart = [];
+        let cartCount = 0;
+        let cartTotal = 0;
+
+        // DOM elementlari
+        const productsContainer = document.getElementById('productsContainer');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCountElement = document.getElementById('cartCount');
+        const cartModal = document.getElementById('cartModal');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotalElement = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const contactForm = document.getElementById('contactForm');
+
+        // Mahsulotlarni sahifaga yuklash
+        function loadProducts(filter = 'all') {
+            productsContainer.innerHTML = '';
+            
+            const filteredProducts = filter === 'all' 
+                ? products 
+                : products.filter(product => product.category === filter);
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">${product.price.toLocaleString()} so'm</p>
+                        <button class="add-to-cart" data-id="${product.id}">Savatga qo'shish</button>
+                    </div>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+            
+            // Savatga qo'shish tugmalariga event listener qo'shish
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', addToCart);
+            });
+        }
+
+        // Savatga mahsulot qo'shish
+        function addToCart(e) {
+            const productId = parseInt(e.target.getAttribute('data-id'));
+            const product = products.find(p => p.id === productId);
+            
+            // Mahsulotni savatga qo'shish
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            // Savatni yangilash
+            updateCart();
+            
+            // Xabar ko'rsatish
+            alert(`${product.name} savatingizga qo'shildi!`);
+        }
+
+        // Savatni yangilash
+        function updateCart() {
+            // Savatdagi mahsulotlar soni
+            cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCountElement.textContent = cartCount;
+            
+            // Savatdagi mahsulotlar jami narxi
+            cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            cartTotalElement.textContent = cartTotal.toLocaleString();
+            
+            // Savatdagi mahsulotlarni ko'rsatish
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Savatda mahsulot yo\'q</p>';
+                return;
+            }
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-info">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <p class="cart-item-price">${item.price.toLocaleString()} so'm</p>
+                        </div>
+                    </div>
+                    <div>
+                        <span>${item.quantity} x</span>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+        }
+
+        // Filtrlash
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Faqat bitta tugma faol bo'ladi
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Mahsulotlarni filtrlash
+                const filter = button.getAttribute('data-filter');
+                loadProducts(filter);
+            });
+        });
+
+        // Kontakt formasi
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Bu yerda formani serverga yuborish logikasi bo'ladi
+            // Hozircha faqat xabar ko'rsatamiz
+            alert(`Xabaringiz qabul qilindi! Tez orada siz bilan bog'lanamiz.\n\nIsm: ${name}\nEmail: ${email}\nTelefon: ${phone}\nXabar: ${message}`);
+            
+            // Formani tozalash
+            contactForm.reset();
+        });
+
+        // Event listenerlar
+        cartIcon.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+        
+        closeCart.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+        
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Savatda mahsulot yo\'q!');
+                return;
+            }
+            
+            alert('Buyurtmangiz qabul qilindi! Tez orada operator siz bilan bog\'lanadi.');
+            cart = [];
+            updateCart();
+            cartModal.style.display = 'none';
+        });
+
+        // Sahifa yuklanganda mahsulotlarni yuklash
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            updateCart();
+        });
+    </script>
+</body>
+</html>
